@@ -6,24 +6,27 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from time import sleep
 from os import environ
+from datetime import datetime, timezone, timedelta
+
+options = Options()
 
 try:
     if bool(environ['CI']) == True:
         print("Env: Github")
+        options.headless = True
     else:
         print("Env: Local")
         from secret import *
+        options.headless = False
 except KeyError:
     print("Env: Local")
     from secret import *
+    options.headless = False
 
 yi__b_an = 'Mozilla/5.0 yi' + 'b' + 'an_and' + 'roid/5.0.1'
 
 profile = webdriver.FirefoxProfile()
 profile.set_preference("general.user" + "agent.override", yi__b_an)
-
-options = Options()
-options.headless = False
 
 driver = webdriver.Firefox(firefox_profile=profile, options=options)
 
@@ -49,3 +52,6 @@ def tryClickByXPath(itemXPath):
         element.click()
     except ElementClickInterceptedException:
         driver.execute_script("arguments[0].click();", element)
+
+def printTime():
+    print(datetime.now(timezone(timedelta(hours=0))).strftime('%Y-%m-%d %H:%M:%S'))

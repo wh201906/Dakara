@@ -4,6 +4,8 @@ from os import environ
 
 def login():
     sleep(3)
+    printTime()
+    print("Info: Start login")
     usernameId = 'oau' + 'th_una' + 'me_w'
     tryClickById(usernameId)
     driver.find_element_by_id(usernameId).send_keys(

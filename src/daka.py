@@ -16,23 +16,29 @@ login()
 sleep(5)
 driver.implicitly_wait(5)
 if urlcore not in driver.current_url:
+    printTime()
     print("Error: Failed to login")
     exit(1)
 else:
+    printTime()
     print("Info: Login successed!")
 
 if checkState():
+    printTime()
     print("Error: Already check in")
     exit(1)
 else:
+    printTime()
     print("Info: Start")
 
+printTime()
 print("Info: Manual location")
 manualXpath = '/html/body/div[1]/div[2]/div[3]/div[1]/div/div[1]/span[2]'
 tryClickByXPath(manualXpath)
 locationXpath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[1]/div[2]/div/input'
 tryClickByXPath(locationXpath)
 
+printTime()
 print("Info: Selecting location")
 for i in range(1, int(environ['MY_SECRET_PROVINCE']) + 1):
     XPath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[3]/div/div[2]/div[1]/ul/li['
@@ -63,7 +69,9 @@ driver.refresh()
 sleep(5)
 driver.implicitly_wait(5)
 if checkState() == False:
+    printTime()
     print("Error: Failed to check in")
     exit(1)
 else:
+    printTime()
     print("Info: Successed!")
