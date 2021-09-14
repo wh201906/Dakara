@@ -13,8 +13,8 @@ def checkState():
 driver.get(url)
 login()
 
-sleep(5)
-driver.implicitly_wait(5)
+sleep(sleepTime)
+driver.implicitly_wait(implicitWaitTime)
 if urlcore not in driver.current_url:
     printTime()
     print("Error: Failed to login")
@@ -60,14 +60,14 @@ vaccineXPath = '/html/body/div[1]/div[2]/div[3]/div[2]/div[8]/div[2]/div/div[4]/
 tryClickByXPath(vaccineXPath)
 dakaXPath = '/html/body/div[1]/div[2]/div[3]/p/button'
 tryClickByXPath(dakaXPath)
-sleep(2)
+sleep(sleepTime)
 finalXPath = '/html/body/div[4]/div[3]/button[2]'
 tryClickByXPath(finalXPath)
 
-sleep(5)
+sleep(sleepTime)
 driver.refresh()
-sleep(5)
-driver.implicitly_wait(5)
+sleep(sleepTime)
+driver.implicitly_wait(implicitWaitTime)
 if checkState() == False:
     printTime()
     print("Error: Failed to check in")

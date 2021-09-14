@@ -8,6 +8,9 @@ from time import sleep
 from os import environ
 from datetime import datetime, timezone, timedelta
 
+implicitWaitTime = 30
+sleepTime = 10
+
 options = Options()
 
 try:
@@ -33,7 +36,7 @@ driver = webdriver.Firefox(firefox_profile=profile, options=options)
 def tryClickById(itemId):
     global driver
     locator = (By.ID, itemId)
-    WebDriverWait(driver, 5,
+    WebDriverWait(driver, implicitWaitTime,
                   0.5).until(EC.presence_of_element_located(locator))
     element = driver.find_element_by_id(itemId)
     try:
@@ -45,7 +48,7 @@ def tryClickById(itemId):
 def tryClickByXPath(itemXPath):
     global driver
     locator = (By.XPATH, itemXPath)
-    WebDriverWait(driver, 5,
+    WebDriverWait(driver, implicitWaitTime,
                   0.5).until(EC.presence_of_element_located(locator))
     element = driver.find_element_by_xpath(itemXPath)
     try:

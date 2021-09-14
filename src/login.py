@@ -3,7 +3,8 @@ from os import environ
 
 
 def login():
-    sleep(3)
+    sleep(sleepTime)
+    driver.implicitly_wait(implicitWaitTime)
     printTime()
     print("Info: Start login")
     usernameId = 'oau' + 'th_una' + 'me_w'
