@@ -5,20 +5,27 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from time import sleep
+from os import environ
 
-# from secret import *
+try:
+    if bool(environ['CI']) == True:
+        print("Env: Github")
+    else:
+        print("Env: Local")
+        from secret import *
+except KeyError:
+    print("Env: Local")
+    from secret import *
 
-yiban = 'Mozilla/5.0 yi' + 'b' + 'an_and' + 'roid/5.0.1'
+yi__b_an = 'Mozilla/5.0 yi' + 'b' + 'an_and' + 'roid/5.0.1'
 
 profile = webdriver.FirefoxProfile()
-profile.set_preference("general.useragent.override", yiban)
+profile.set_preference("general.user" + "agent.override", yi__b_an)
 
 options = Options()
 options.headless = False
 
 driver = webdriver.Firefox(firefox_profile=profile, options=options)
-driver.get('https' + '://heal' + 'thch' + 'ecki' + 'n.hd' + 'u' + 'he' +
-           'lp.com')
 
 def tryClickById(itemId):
     global driver
