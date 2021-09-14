@@ -1,21 +1,19 @@
 from util import *
 from os import environ
 
+usernameFeature = [(By.ID, 'oau' + 'th_una' + 'me_w'), (By.CLASS_NAME, 'user')]
+passwordFeature = [(By.ID, 'oau' + 'th_up' + 'wd_w'), (By.CLASS_NAME, 'pwd')]
+authFeature = [(By.CLASS_NAME, 'oau' + 'th_ch' + 'eck_log' + 'in'),
+               (By.XPATH, '/html/body/main/section[1]/div/div[4]/button[1]')]
+
 
 def login():
     try:
         printTime()
         print("Info: Start login")
-        usernameId = 'oau' + 'th_una' + 'me_w'
-        tryClickById(usernameId)
-        driver.find_element_by_id(usernameId).send_keys(
-            environ['MY_SECRET_USERNAME'])
-        passwordId = 'oau' + 'th_up' + 'wd_w'
-        tryClickById(passwordId)
-        driver.find_element_by_id(passwordId).send_keys(
-            environ['MY_SECRET_PASSWORD'])
-        authXPath = '/html/body/main/section[1]/div/div[4]/button[1]'
-        tryClickByXPath(authXPath)
+        tryClick(usernameFeature).send_keys(environ['MY_SECRET_USERNAME'])
+        tryClick(passwordFeature).send_keys(environ['MY_SECRET_PASSWORD'])
+        tryClick(authFeature)
     except BaseException as e:
         my_print_exc(e)
         return False

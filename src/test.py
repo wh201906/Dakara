@@ -49,15 +49,55 @@ if urlcore not in driver.current_url:
     print("Error: Failed to login")
     exit(1)
 
-# if checkState():
-#     printTime()
-#     print("Error: Already check in")
-#     exit(1)
-# else:
-#     printTime()
-#     print("Info: Start")
+if checkState():
+    printTime()
+    print("Error: Already check in")
+    exit(1)
+else:
+    printTime()
+    print("Info: Start")
 
-print('************')
-print(driver.page_source)
-print('************')
-print("Check State: ", checkState())
+location = environ['MY_SECRET_LOCATION']
+location = literal_eval(location)
+
+manualFeature = [
+    (By.CLASS_NAME, 'van-tag--warning'),
+    (By.XPATH, '/html/body/div[1]/div[2]/div[3]/div[3]/div/div[1]/span[2]'),
+    (By.XPATH, '/html/body/div[1]/div[2]/div[3]/div[1]/div/div[1]/span[2]')
+]
+locationFeature = [
+    (By.CLASS_NAME, 'van-field__control--right'),
+    (By.XPATH,
+     '/html/body/div[1]/div[2]/div[3]/div[3]/div[1]/div[2]/div/input'),
+    (By.XPATH,
+     '/html/body/div[1]/div[2]/div[3]/div[1]/div[1]/div[2]/div/input')
+]
+printTime()
+print("Info: Manual location")
+tryClick(manualFeature)
+tryClick(locationFeature)
+
+printTime()
+print("Info: Selecting location")
+popupFeature = [(By.CLASS_NAME, 'van-popup--bottom')]
+popupElement = tryClick(popupFeature)
+columnList = popupElement.find_elements(By.CLASS_NAME,
+                                        'van-picker-column__wrapper')
+print("Column:", len(columnList))
+province = columnList[0].find_elements(By.CLASS_NAME,
+                                       'van-picker-column__item')
+for i in range(int(location['province'])):
+    province[i].click()
+    print(province[i].text)
+city = columnList[1].find_elements(By.CLASS_NAME, 'van-picker-column__item')
+for i in range(int(location['city'])):
+    city[i].click()
+    print(city[i].text)
+district = columnList[2].find_elements(By.CLASS_NAME,
+                                       'van-picker-column__item')
+for i in range(int(location['district'])):
+    district[i].click()
+    print(district[i].text)
+
+confirmFeature = [(By.CLASS_NAME, 'van-picker__confirm')]
+tryClickFrom(popupElement, confirmFeature)

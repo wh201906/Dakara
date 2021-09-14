@@ -63,40 +63,40 @@ location = literal_eval(location)
 printTime()
 print("Info: Manual location")
 manualXpath = '/html/body/div[1]/div[2]/div[3]/div[1]/div/div[1]/span[2]'
-tryClickByXPath(manualXpath)
+tryClick(By.XPATH, manualXpath)
 locationXpath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[1]/div[2]/div/input'
-tryClickByXPath(locationXpath)
+tryClick(By.XPATH, locationXpath)
 
 printTime()
 print("Info: Selecting location")
 for i in range(1, int(location['province']) + 1):
     XPath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[3]/div/div[2]/div[1]/ul/li['
     XPath += str(i) + ']'
-    tryClickByXPath(XPath)
+    tryClick(By.XPATH, XPath)
 for i in range(1, int(location['city']) + 1):
     XPath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[3]/div/div[2]/div[2]/ul/li['
     XPath += str(i) + ']'
-    tryClickByXPath(XPath)
+    tryClick(By.XPATH, XPath)
 for i in range(1, int(location['district']) + 1):
     XPath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[3]/div/div[2]/div[3]/ul/li['
     XPath += str(i) + ']'
-    tryClickByXPath(XPath)
+    tryClick(By.XPATH, XPath)
 
 confirmXPath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[3]/div/div[1]/button[2]'
-tryClickByXPath(confirmXPath)
+tryClick(By.XPATH, confirmXPath)
 
 printTime()
 print("Info: Selecting vaccine")
 vaccineXPath = '/html/body/div[1]/div[2]/div[3]/div[2]/div[8]/div[2]/div/div[4]/div[2]'
-tryClickByXPath(vaccineXPath)
+tryClick(By.XPATH, vaccineXPath)
 
 printTime()
 print("Info: Confirming")
 dakaXPath = '/html/body/div[1]/div[2]/div[3]/p/button'
-tryClickByXPath(dakaXPath)
+tryClick(By.XPATH, dakaXPath)
 sleep(sleepTime)
 finalXPath = '/html/body/div[4]/div[3]/button[2]'
-tryClickByXPath(finalXPath)
+tryClick(By.XPATH, finalXPath)
 
 printTime()
 print("Info: Checking state")

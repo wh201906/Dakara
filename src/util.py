@@ -1,5 +1,6 @@
 from selenium import webdriver
-from selenium.common.exceptions import ElementClickInterceptedException, WebDriverException
+from selenium.common.exceptions import ElementClickInterceptedException, WebDriverException, TimeoutException, ElementNotInteractableException
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -26,6 +27,9 @@ except KeyError:
 
 if isRemote == False:
     from secret import *
+    pageWaitTime = 30
+    implicitWaitTime = 30
+    sleepTime = 5
 
 options = Options()
 options.headless = isRemote
@@ -36,38 +40,53 @@ url = 'https' + '://' + urlcore + '.hd' + 'u' + 'he' + 'lp.com'
 
 profile = webdriver.FirefoxProfile()
 profile.set_preference("general.user" + "agent.override", yi__b_an)
+profile.set_preference("geo.prompt.testing", True)
+profile.set_preference("geo.prompt.testing.allow", False)
 
 driver = webdriver.Firefox(firefox_profile=profile, options=options)
 
-
-def tryClickById(itemId):
+def tryClickFrom(start, lis):
     global driver
-    locator = (By.ID, itemId)
-    WebDriverWait(driver, implicitWaitTime,
-                  0.5).until(EC.presence_of_element_located(locator))
-    element = driver.find_element_by_id(itemId)
-    try:
-        element.click()
-    except ElementClickInterceptedException:
-        driver.execute_script("arguments[0].click();", element)
+    targetList = []
+    element = None
+    for by, feature in lis:
+        locator = (by, feature)
+        print("Current locator:", '(' + by + ', ' + feature + ')', end=', ')
+        try:
+            # sleep(sleepTime)
+            WebDriverWait(driver, implicitWaitTime, 0.5).until(
+                EC.presence_of_all_elements_located(locator))
+        except TimeoutException:
+            continue
+        targetList = start.find_elements(by, feature)
+        break
+    print('num:', len(targetList))
 
+    for element in targetList:
+        try:
+            element.click()
+        except ElementClickInterceptedException:
+            print("ElementClickInterceptedException")
+            driver.execute_script("arguments[0].click();", element)
+            return element
+        except ElementNotInteractableException:
+            print("ElementNotInteractableException")
+        else:
+            return element
 
-def tryClickByXPath(itemXPath):
+# [(by, feature), (by, feature), ....]
+# xpath is not stable
+def tryClick(lis):
     global driver
-    locator = (By.XPATH, itemXPath)
-    WebDriverWait(driver, implicitWaitTime,
-                  0.5).until(EC.presence_of_element_located(locator))
-    element = driver.find_element_by_xpath(itemXPath)
-    try:
-        element.click()
-    except ElementClickInterceptedException:
-        driver.execute_script("arguments[0].click();", element)
+    return tryClickFrom(driver, lis)
+    
 
 
 def printTime():
     print(datetime.now(timezone(
         timedelta(hours=0))).strftime('%Y-%m-%d %H:%M:%S'),
           end=' ')
+
 
 def my_print_exc(e):
     try:
