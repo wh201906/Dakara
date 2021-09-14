@@ -3,9 +3,6 @@ from os import environ
 from login import login
 from ast import literal_eval
 
-urlcore = 'heal' + 'thch' + 'ecki' + 'n'
-url = 'https' + '://' + urlcore + '.hd' + 'u' + 'he' + 'lp.com'
-
 
 def checkState():
     return ('今日已打卡' in driver.page_source)

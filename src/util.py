@@ -27,6 +27,8 @@ except KeyError:
     options.headless = False
 
 yi__b_an = 'Mozilla/5.0 yi' + 'b' + 'an_and' + 'roid/5.0.1'
+urlcore = 'heal' + 'thch' + 'ecki' + 'n'
+url = 'https' + '://' + urlcore + '.hd' + 'u' + 'he' + 'lp.com'
 
 profile = webdriver.FirefoxProfile()
 profile.set_preference("general.user" + "agent.override", yi__b_an)
