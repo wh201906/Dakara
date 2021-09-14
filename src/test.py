@@ -22,18 +22,26 @@ for i in range(5):
         else:
             continue
 
-    if login():
+    sleep(sleepTime)
+    driver.implicitly_wait(pageWaitTime)
+    if urlcore not in driver.current_url and login() is False:
+        continue
+
+    sleep(sleepTime)
+    driver.implicitly_wait(pageWaitTime)
+    sleep(sleepTime)
+    print('Now at: ' + driver.current_url)
+    if urlcore not in driver.current_url:
+        printTime()
+        print("Error: Failed to login")
+        continue
+    else:
+        printTime()
+        print("Info: Login successed!")
         break
 
-sleep(sleepTime)
-driver.implicitly_wait(pageWaitTime)
 if urlcore not in driver.current_url:
-    printTime()
-    print("Error: Failed to login")
     exit(1)
-else:
-    printTime()
-    print("Info: Login successed!")
 
 # if checkState():
 #     printTime()

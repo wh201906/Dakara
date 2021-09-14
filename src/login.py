@@ -4,8 +4,6 @@ from os import environ
 
 def login():
     try:
-        sleep(sleepTime)
-        driver.implicitly_wait(pageWaitTime)
         printTime()
         print("Info: Start login")
         usernameId = 'oau' + 'th_una' + 'me_w'
