@@ -14,26 +14,40 @@ for i in range(5):
     try:
         driver.get(url)
     except BaseException as e:
+        print("Error: Failed to open url#" + str(i + 1))
         my_print_exc(e)
         if i == 4:
             printTime()
-            print("Error: Failed to open")
+            print("Error: Failed to open url")
             exit(1)
         else:
             continue
 
-    if login():
+    sleep(sleepTime)
+    driver.implicitly_wait(pageWaitTime)
+    if urlcore not in driver.current_url and login() is False:
+        printTime()
+        print("Info: Unexpected url at " + driver.current_url)
+        continue
+
+    sleep(sleepTime)
+    driver.implicitly_wait(pageWaitTime)
+    sleep(sleepTime)
+    printTime()
+    print('Now at: ' + driver.current_url)
+    if urlcore not in driver.current_url:
+        printTime()
+        print("Error: Failed to login#" + str(i + 1))
+        continue
+    else:
+        printTime()
+        print("Info: Login successed!")
         break
 
-sleep(sleepTime)
-driver.implicitly_wait(pageWaitTime)
 if urlcore not in driver.current_url:
     printTime()
     print("Error: Failed to login")
     exit(1)
-else:
-    printTime()
-    print("Info: Login successed!")
 
 if checkState():
     printTime()
@@ -71,18 +85,26 @@ for i in range(1, int(location['district']) + 1):
 confirmXPath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[3]/div/div[1]/button[2]'
 tryClickByXPath(confirmXPath)
 
+printTime()
+print("Info: Selecting vaccine")
 vaccineXPath = '/html/body/div[1]/div[2]/div[3]/div[2]/div[8]/div[2]/div/div[4]/div[2]'
 tryClickByXPath(vaccineXPath)
+
+printTime()
+print("Info: Confirming")
 dakaXPath = '/html/body/div[1]/div[2]/div[3]/p/button'
 tryClickByXPath(dakaXPath)
 sleep(sleepTime)
 finalXPath = '/html/body/div[4]/div[3]/button[2]'
 tryClickByXPath(finalXPath)
 
+printTime()
+print("Info: Checking state")
 sleep(sleepTime)
 driver.refresh()
 sleep(sleepTime)
 driver.implicitly_wait(implicitWaitTime)
+sleep(sleepTime)
 if checkState() == False:
     printTime()
     print("Error: Failed to check in")

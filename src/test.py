@@ -14,10 +14,11 @@ for i in range(5):
     try:
         driver.get(url)
     except BaseException as e:
+        print("Error: Failed to open url#" + str(i + 1))
         my_print_exc(e)
         if i == 4:
             printTime()
-            print("Error: Failed to open")
+            print("Error: Failed to open url")
             exit(1)
         else:
             continue
@@ -25,15 +26,18 @@ for i in range(5):
     sleep(sleepTime)
     driver.implicitly_wait(pageWaitTime)
     if urlcore not in driver.current_url and login() is False:
+        printTime()
+        print("Info: Unexpected url at " + driver.current_url)
         continue
 
     sleep(sleepTime)
     driver.implicitly_wait(pageWaitTime)
     sleep(sleepTime)
+    printTime()
     print('Now at: ' + driver.current_url)
     if urlcore not in driver.current_url:
         printTime()
-        print("Error: Failed to login")
+        print("Error: Failed to login#" + str(i + 1))
         continue
     else:
         printTime()
@@ -41,6 +45,8 @@ for i in range(5):
         break
 
 if urlcore not in driver.current_url:
+    printTime()
+    print("Error: Failed to login")
     exit(1)
 
 # if checkState():
@@ -53,3 +59,5 @@ if urlcore not in driver.current_url:
 
 print('************')
 print(driver.page_source)
+print('************')
+print("Check State: ", checkState())

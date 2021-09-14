@@ -11,7 +11,7 @@ from traceback import print_exc
 
 pageWaitTime = 300
 implicitWaitTime = 60
-sleepTime = 10
+sleepTime = 30
 
 try:
     if bool(environ['CI']) == True:
