@@ -19,6 +19,6 @@ def login():
         authXPath = '/html/body/main/section[1]/div/div[4]/button[1]'
         tryClickByXPath(authXPath)
     except BaseException as e:
-        print_exc(e)
+        my_print_exc(e)
         return False
     return True

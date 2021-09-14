@@ -14,7 +14,7 @@ for i in range(5):
     try:
         driver.get(url)
     except BaseException as e:
-        print_exc(e)
+        my_print_exc(e)
         if i == 4:
             printTime()
             print("Error: Failed to open")
