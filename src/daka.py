@@ -8,16 +8,27 @@ def checkState():
     return ('今日已打卡' in driver.page_source)
 
 
-for _ in range(5):
+for i in range(5):
+    printTime()
+    print('Info: Open url#' + str(i + 1))
     try:
         driver.get(url)
-    except WebDriverException:
-        continue
+    except BaseException as e:
+        print_exc(e)
+        if i == 4:
+            printTime()
+            print("Error: Failed to open")
+            exit(1)
+        else:
+            continue
+    break
 
-login()
+for i in range(5):
+    if login():
+        break
 
 sleep(sleepTime)
-driver.implicitly_wait(implicitWaitTime)
+driver.implicitly_wait(pageWaitTime)
 if urlcore not in driver.current_url:
     printTime()
     print("Error: Failed to login")

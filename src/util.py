@@ -7,8 +7,10 @@ from selenium.webdriver.common.by import By
 from time import sleep
 from os import environ
 from datetime import datetime, timezone, timedelta
+from traceback import print_exc
 
-implicitWaitTime = 500
+pageWaitTime = 300
+implicitWaitTime = 60
 sleepTime = 10
 
 options = Options()
@@ -35,6 +37,7 @@ profile.set_preference("general.user" + "agent.override", yi__b_an)
 
 driver = webdriver.Firefox(firefox_profile=profile, options=options)
 
+
 def tryClickById(itemId):
     global driver
     locator = (By.ID, itemId)
@@ -58,5 +61,8 @@ def tryClickByXPath(itemXPath):
     except ElementClickInterceptedException:
         driver.execute_script("arguments[0].click();", element)
 
+
 def printTime():
-    print(datetime.now(timezone(timedelta(hours=0))).strftime('%Y-%m-%d %H:%M:%S'))
+    print(datetime.now(timezone(
+        timedelta(hours=0))).strftime('%Y-%m-%d %H:%M:%S'),
+          end=' ')
