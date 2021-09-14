@@ -13,20 +13,22 @@ pageWaitTime = 300
 implicitWaitTime = 60
 sleepTime = 10
 
-options = Options()
-
 try:
     if bool(environ['CI']) == True:
         print("Env: Github")
-        options.headless = True
+        isRemote = True
     else:
         print("Env: Local")
-        from secret import *
-        options.headless = False
+        isRemote = False
 except KeyError:
     print("Env: Local")
+    isRemote = False
+
+if isRemote == False:
     from secret import *
-    options.headless = False
+
+options = Options()
+options.headless = isRemote
 
 yi__b_an = 'Mozilla/5.0 yi' + 'b' + 'an_and' + 'roid/5.0.1'
 urlcore = 'heal' + 'thch' + 'ecki' + 'n'

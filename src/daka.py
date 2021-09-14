@@ -21,9 +21,7 @@ for i in range(5):
             exit(1)
         else:
             continue
-    break
 
-for i in range(5):
     if login():
         break
 
@@ -47,8 +45,6 @@ else:
 
 location = environ['MY_SECRET_LOCATION']
 location = literal_eval(location)
-print(location)
-print(type(location))
 
 printTime()
 print("Info: Manual location")

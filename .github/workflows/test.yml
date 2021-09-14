@@ -20,4 +20,8 @@ jobs:
         run: pip install selenium
 
       - name: Test
+        env: 
+          MY_SECRET_USERNAME: ${{ secrets.MY_SECRET_USERNAME }}
+          MY_SECRET_PASSWORD: ${{ secrets.MY_SECRET_PASSWORD }}
+          MY_SECRET_LOCATION: ${{ secrets.MY_SECRET_LOCATION }}
         run: python ./src/test.py

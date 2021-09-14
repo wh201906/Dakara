@@ -25,8 +25,6 @@ jobs:
         env: 
           MY_SECRET_USERNAME: ${{ secrets.MY_SECRET_USERNAME }}
           MY_SECRET_PASSWORD: ${{ secrets.MY_SECRET_PASSWORD }}
-          MY_SECRET_PROVINCE: ${{ secrets.MY_SECRET_PROVINCE }}
-          MY_SECRET_CITY: ${{ secrets.MY_SECRET_CITY }}
-          MY_SECRET_DISTRICT: ${{ secrets.MY_SECRET_DISTRICT }}
+          MY_SECRET_LOCATION: ${{ secrets.MY_SECRET_LOCATION }}
         run: python ./src/daka.py
         

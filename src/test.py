@@ -21,14 +21,12 @@ for i in range(5):
             exit(1)
         else:
             continue
-    break
 
-for i in range(5):
     if login():
         break
 
 sleep(sleepTime)
-driver.implicitly_wait(implicitWaitTime)
+driver.implicitly_wait(pageWaitTime)
 if urlcore not in driver.current_url:
     printTime()
     print("Error: Failed to login")
@@ -37,26 +35,13 @@ else:
     printTime()
     print("Info: Login successed!")
 
-if checkState():
-    printTime()
-    print("Error: Already check in")
-    exit(1)
-else:
-    printTime()
-    print("Info: Start")
+# if checkState():
+#     printTime()
+#     print("Error: Already check in")
+#     exit(1)
+# else:
+#     printTime()
+#     print("Info: Start")
 
-for i in range(5):
-    printTime()
-    print('Info: Open url#' + str(i + 1))
-    try:
-        driver.get(url)
-    except WebDriverException:
-        continue
-
-driver.implicitly_wait(200)
-print(driver.current_url)
-print(driver.page_source)
-login()
-driver.implicitly_wait(200)
-print(driver.current_url)
+print('************')
 print(driver.page_source)
