@@ -8,7 +8,7 @@ from time import sleep
 from os import environ
 from datetime import datetime, timezone, timedelta
 
-implicitWaitTime = 30
+implicitWaitTime = 200
 sleepTime = 10
 
 options = Options()
