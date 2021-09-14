@@ -8,7 +8,12 @@ def checkState():
     return ('今日已打卡' in driver.page_source)
 
 
-driver.get(url)
+for _ in range(5):
+    try:
+        driver.get(url)
+    except WebDriverException:
+        continue
+
 login()
 
 sleep(sleepTime)

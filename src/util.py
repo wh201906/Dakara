@@ -1,5 +1,5 @@
 from selenium import webdriver
-from selenium.common.exceptions import ElementClickInterceptedException
+from selenium.common.exceptions import ElementClickInterceptedException, WebDriverException
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -8,7 +8,7 @@ from time import sleep
 from os import environ
 from datetime import datetime, timezone, timedelta
 
-implicitWaitTime = 200
+implicitWaitTime = 500
 sleepTime = 10
 
 options = Options()
