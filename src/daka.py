@@ -1,6 +1,7 @@
 from util import *
 from os import environ
 from login import login
+from ast import literal_eval
 
 urlcore = 'heal' + 'thch' + 'ecki' + 'n'
 url = 'https' + '://' + urlcore + '.hd' + 'u' + 'he' + 'lp.com'
@@ -31,6 +32,11 @@ else:
     printTime()
     print("Info: Start")
 
+location = environ['MY_SECRET_LOCATION']
+location = literal_eval(location)
+print(location)
+print(type(location))
+
 printTime()
 print("Info: Manual location")
 manualXpath = '/html/body/div[1]/div[2]/div[3]/div[1]/div/div[1]/span[2]'
@@ -40,15 +46,15 @@ tryClickByXPath(locationXpath)
 
 printTime()
 print("Info: Selecting location")
-for i in range(1, int(environ['MY_SECRET_PROVINCE']) + 1):
+for i in range(1, int(location['province']) + 1):
     XPath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[3]/div/div[2]/div[1]/ul/li['
     XPath += str(i) + ']'
     tryClickByXPath(XPath)
-for i in range(1, int(environ['MY_SECRET_CITY']) + 1):
+for i in range(1, int(location['city']) + 1):
     XPath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[3]/div/div[2]/div[2]/ul/li['
     XPath += str(i) + ']'
     tryClickByXPath(XPath)
-for i in range(1, int(environ['MY_SECRET_DISTRICT']) + 1):
+for i in range(1, int(location['district']) + 1):
     XPath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[3]/div/div[2]/div[3]/ul/li['
     XPath += str(i) + ']'
     tryClickByXPath(XPath)

@@ -1,0 +1,25 @@
+name: Test
+
+on:
+
+  workflow_dispatch:
+    branches:    
+      - main
+
+jobs:
+
+  env:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Check Out
+        uses: actions/checkout@v2
+        
+      - name: Datetime
+        run: date
+      
+      - name: Install Selenium
+        run: pip install selenium
+
+      - name: Test
+        run: python ./src/test.py
