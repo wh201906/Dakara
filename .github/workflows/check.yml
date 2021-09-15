@@ -1,0 +1,28 @@
+name: Check
+
+on:
+  schedule:
+    - cron: '21 23 * * *'
+
+  workflow_dispatch:
+
+jobs:
+
+  check:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Check Out
+        uses: actions/checkout@v2
+        
+      - name: Datetime
+        run: date
+      
+      - name: Install Selenium
+        run: pip install selenium
+
+      - name: Check
+        env: 
+          MY_SECRET_USERNAME: ${{ secrets.MY_SECRET_USERNAME }}
+          MY_SECRET_PASSWORD: ${{ secrets.MY_SECRET_PASSWORD }}
+        run: python ./src/checker.py

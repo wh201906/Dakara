@@ -3,11 +3,6 @@ from os import environ
 from login import login
 from ast import literal_eval
 
-
-def checkState():
-    return ('今日已打卡' in driver.page_source)
-
-
 for i in range(5):
     printTime()
     print('Info: Open url#' + str(i + 1))
