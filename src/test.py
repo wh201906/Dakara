@@ -21,6 +21,8 @@ for i in range(5):
             print("Error: Failed to open url")
             exit(1)
         else:
+            driver.get('about:blank')
+            driver.implicitly_wait(implicitWaitTime)
             continue
 
     sleep(sleepTime)
@@ -60,26 +62,21 @@ else:
 location = environ['MY_SECRET_LOCATION']
 location = literal_eval(location)
 
-manualFeature = [
-    (By.CLASS_NAME, 'van-tag--warning'),
-    (By.XPATH, '/html/body/div[1]/div[2]/div[3]/div[3]/div/div[1]/span[2]'),
-    (By.XPATH, '/html/body/div[1]/div[2]/div[3]/div[1]/div/div[1]/span[2]')
-]
-locationFeature = [
-    (By.CLASS_NAME, 'van-field__control--right'),
-    (By.XPATH,
-     '/html/body/div[1]/div[2]/div[3]/div[3]/div[1]/div[2]/div/input'),
-    (By.XPATH,
-     '/html/body/div[1]/div[2]/div[3]/div[1]/div[1]/div[2]/div/input')
-]
+manualFeature = [(By.CLASS_NAME, 'van-tag--warning'),
+                 (By.XPATH, "//*[contains(text(), '定位不准')]")]
+locationFeature = [(By.CLASS_NAME, 'van-field__control--right'),
+                   (By.XPATH, "//*[contains(@placeholder, '手动选择')]")]
+
+sleep(10)
+print(driver.find_element_by_xpath('/html/body').text)
 printTime()
 print("Info: Manual location")
 tryClick(manualFeature)
 tryClick(locationFeature)
 
+popupFeature = [(By.CLASS_NAME, 'van-popup--bottom')]
 printTime()
 print("Info: Selecting location")
-popupFeature = [(By.CLASS_NAME, 'van-popup--bottom')]
 popupElement = tryClick(popupFeature)
 columnList = popupElement.find_elements(By.CLASS_NAME,
                                         'van-picker-column__wrapper')
@@ -99,5 +96,47 @@ for i in range(int(location['district'])):
     district[i].click()
     print(district[i].text)
 
-confirmFeature = [(By.CLASS_NAME, 'van-picker__confirm')]
+confirmFeature = [(By.CLASS_NAME, 'van-picker__confirm'),
+                  (By.XPATH, ".//button[contains(text(), '确认')]")]
 tryClickFrom(popupElement, confirmFeature)
+
+vaccineFeature = [(
+    By.XPATH,
+    "//span[contains(text(), '共二针') and contains(text(), '已完成第二针')]/../../div[contains(@class, 'van-radio')]"
+)]
+printTime()
+print("Info: Selecting vaccine")
+tryClick(vaccineFeature)
+
+dakaFeature = [
+    (By.CLASS_NAME, 'van-button--info'),
+    (By.XPATH,
+     "//span[contains(text(), '立即打卡') and contains(@class, 'van-button__text')]/../.."
+     )
+]
+finalFeature = [
+    (By.CLASS_NAME, 'van-dialog__confirm'),
+    (By.XPATH,
+     "//span[contains(text(), '确认') and contains(@class, 'van-button__text')]/../.."
+     )
+]
+printTime()
+print("Info: Confirming")
+tryClick(dakaFeature)
+sleep(sleepTime)
+tryClick(finalFeature)
+
+printTime()
+print("Info: Checking state")
+sleep(sleepTime)
+driver.refresh()
+sleep(sleepTime)
+driver.implicitly_wait(implicitWaitTime)
+sleep(sleepTime)
+if checkState() == False:
+    printTime()
+    print("Error: Failed to check in")
+    exit(1)
+else:
+    printTime()
+    print("Info: Successed!")

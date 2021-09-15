@@ -45,6 +45,7 @@ profile.set_preference("geo.prompt.testing.allow", False)
 
 driver = webdriver.Firefox(firefox_profile=profile, options=options)
 
+
 def tryClickFrom(start, lis):
     global driver
     targetList = []
@@ -53,7 +54,7 @@ def tryClickFrom(start, lis):
         locator = (by, feature)
         print("Current locator:", '(' + by + ', ' + feature + ')', end=', ')
         try:
-            # sleep(sleepTime)
+            sleep(sleepTime)
             WebDriverWait(driver, implicitWaitTime, 0.5).until(
                 EC.presence_of_all_elements_located(locator))
         except TimeoutException:
@@ -63,6 +64,8 @@ def tryClickFrom(start, lis):
     print('num:', len(targetList))
 
     for element in targetList:
+        if element.is_displayed() == False:
+            continue
         try:
             element.click()
         except ElementClickInterceptedException:
@@ -74,12 +77,12 @@ def tryClickFrom(start, lis):
         else:
             return element
 
+
 # [(by, feature), (by, feature), ....]
-# xpath is not stable
+# xpath consisting of absolute nodes is not stable
 def tryClick(lis):
     global driver
     return tryClickFrom(driver, lis)
-    
 
 
 def printTime():
@@ -92,4 +95,4 @@ def my_print_exc(e):
     try:
         print_exc(e)
     except TypeError:
-        pass
+        print(repr(e))

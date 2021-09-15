@@ -4,7 +4,8 @@ from os import environ
 usernameFeature = [(By.ID, 'oau' + 'th_una' + 'me_w'), (By.CLASS_NAME, 'user')]
 passwordFeature = [(By.ID, 'oau' + 'th_up' + 'wd_w'), (By.CLASS_NAME, 'pwd')]
 authFeature = [(By.CLASS_NAME, 'oau' + 'th_ch' + 'eck_log' + 'in'),
-               (By.XPATH, '/html/body/main/section[1]/div/div[4]/button[1]')]
+               (By.XPATH,
+                "//button[contains(text(), '授') and contains(text(), '权')]")]
 
 
 def login():
