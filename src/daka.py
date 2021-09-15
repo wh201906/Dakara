@@ -21,6 +21,8 @@ for i in range(5):
             print("Error: Failed to open url")
             exit(1)
         else:
+            driver.get('about:blank')
+            driver.implicitly_wait(implicitWaitTime)
             continue
 
     sleep(sleepTime)
@@ -60,43 +62,68 @@ else:
 location = environ['MY_SECRET_LOCATION']
 location = literal_eval(location)
 
+manualFeature = [(By.CLASS_NAME, 'van-tag--warning'),
+                 (By.XPATH, "//*[contains(text(), '定位不准')]")]
+locationFeature = [(By.CLASS_NAME, 'van-field__control--right'),
+                   (By.XPATH, "//*[contains(@placeholder, '手动选择')]")]
+
+sleep(10)
 printTime()
 print("Info: Manual location")
-manualXpath = '/html/body/div[1]/div[2]/div[3]/div[1]/div/div[1]/span[2]'
-tryClick(By.XPATH, manualXpath)
-locationXpath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[1]/div[2]/div/input'
-tryClick(By.XPATH, locationXpath)
+tryClick(manualFeature)
+tryClick(locationFeature)
 
+popupFeature = [(By.CLASS_NAME, 'van-popup--bottom')]
 printTime()
 print("Info: Selecting location")
-for i in range(1, int(location['province']) + 1):
-    XPath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[3]/div/div[2]/div[1]/ul/li['
-    XPath += str(i) + ']'
-    tryClick(By.XPATH, XPath)
-for i in range(1, int(location['city']) + 1):
-    XPath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[3]/div/div[2]/div[2]/ul/li['
-    XPath += str(i) + ']'
-    tryClick(By.XPATH, XPath)
-for i in range(1, int(location['district']) + 1):
-    XPath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[3]/div/div[2]/div[3]/ul/li['
-    XPath += str(i) + ']'
-    tryClick(By.XPATH, XPath)
+popupElement = tryClick(popupFeature)
+columnList = popupElement.find_elements(By.CLASS_NAME,
+                                        'van-picker-column__wrapper')
+print("Column:", len(columnList))
+province = columnList[0].find_elements(By.CLASS_NAME,
+                                       'van-picker-column__item')
+for i in range(int(location['province'])):
+    province[i].click()
+    print(province[i].text)
+city = columnList[1].find_elements(By.CLASS_NAME, 'van-picker-column__item')
+for i in range(int(location['city'])):
+    city[i].click()
+    print(city[i].text)
+district = columnList[2].find_elements(By.CLASS_NAME,
+                                       'van-picker-column__item')
+for i in range(int(location['district'])):
+    district[i].click()
+    print(district[i].text)
 
-confirmXPath = '/html/body/div[1]/div[2]/div[3]/div[1]/div[3]/div/div[1]/button[2]'
-tryClick(By.XPATH, confirmXPath)
+confirmFeature = [(By.CLASS_NAME, 'van-picker__confirm'),
+                  (By.XPATH, ".//button[contains(text(), '确认')]")]
+tryClickFrom(popupElement, confirmFeature)
 
+vaccineFeature = [(
+    By.XPATH,
+    "//span[contains(text(), '共二针') and contains(text(), '已完成第二针')]/../../div[contains(@class, 'van-radio')]"
+)]
 printTime()
 print("Info: Selecting vaccine")
-vaccineXPath = '/html/body/div[1]/div[2]/div[3]/div[2]/div[8]/div[2]/div/div[4]/div[2]'
-tryClick(By.XPATH, vaccineXPath)
+tryClick(vaccineFeature)
 
+dakaFeature = [
+    (By.CLASS_NAME, 'van-button--info'),
+    (By.XPATH,
+     "//span[contains(text(), '立即打卡') and contains(@class, 'van-button__text')]/../.."
+     )
+]
+finalFeature = [
+    (By.CLASS_NAME, 'van-dialog__confirm'),
+    (By.XPATH,
+     "//span[contains(text(), '确认') and contains(@class, 'van-button__text')]/../.."
+     )
+]
 printTime()
 print("Info: Confirming")
-dakaXPath = '/html/body/div[1]/div[2]/div[3]/p/button'
-tryClick(By.XPATH, dakaXPath)
+tryClick(dakaFeature)
 sleep(sleepTime)
-finalXPath = '/html/body/div[4]/div[3]/button[2]'
-tryClick(By.XPATH, finalXPath)
+tryClick(finalFeature)
 
 printTime()
 print("Info: Checking state")

@@ -68,7 +68,6 @@ locationFeature = [(By.CLASS_NAME, 'van-field__control--right'),
                    (By.XPATH, "//*[contains(@placeholder, '手动选择')]")]
 
 sleep(10)
-print(driver.find_element_by_xpath('/html/body').text)
 printTime()
 print("Info: Manual location")
 tryClick(manualFeature)

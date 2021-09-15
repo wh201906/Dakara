@@ -2,7 +2,7 @@ name: Daka
 
 on:
   schedule:
-    - cron: '11 21 * * *'
+    - cron: '35 04 * * *'
 
   workflow_dispatch:
 
