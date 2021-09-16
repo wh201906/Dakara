@@ -49,7 +49,7 @@ if urlcore not in driver.current_url:
 if checkState():
     printTime()
     print("Error: Already check in")
-    exit(1)
+    exit(0)
 else:
     printTime()
     print("Info: Start")

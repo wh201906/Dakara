@@ -1,28 +1,30 @@
-name: Check
+name: Dakara_final
 
 on:
   schedule:
-    - cron: '23 03 * * *'
+    - cron: '54 02 * * *'
 
   workflow_dispatch:
 
 jobs:
 
-  check:
+  daka_final:
     runs-on: ubuntu-20.04
 
     steps:
       - name: Check Out
         uses: actions/checkout@v2
         
-      - name: Datetime
-        run: date
-      
       - name: Install Selenium
         run: pip install selenium
+      
+      - name: Random Delay
+        run: python ./src/delay.py
 
-      - name: Check
+      - name: Payload
         env: 
           MY_SECRET_USERNAME: ${{ secrets.MY_SECRET_USERNAME }}
           MY_SECRET_PASSWORD: ${{ secrets.MY_SECRET_PASSWORD }}
-        run: python ./src/checker.py
+          MY_SECRET_LOCATION: ${{ secrets.MY_SECRET_LOCATION }}
+        run: python ./src/daka.py
+        

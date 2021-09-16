@@ -1,27 +1,35 @@
-name: Daka
+name: Dakara_rand
 
 on:
   schedule:
-    - cron: '11 21 * * *'
+    - cron: '11 21,23,01,02 * * *'
 
   workflow_dispatch:
 
 jobs:
 
-  daka:
+  daka_rand:
     runs-on: ubuntu-20.04
 
     steps:
       - name: Check Out
         uses: actions/checkout@v2
-        
+
+      - name: Random
+        id: continueToRun
+        run: python ./src/rand.py
+        continue-on-error: true
+
       - name: Install Selenium
+        if:  ${{ contains(steps.continueToRun.outcome, 'success') }}
         run: pip install selenium
       
       - name: Random Delay
+        if:  ${{ contains(steps.continueToRun.outcome, 'success') }}
         run: python ./src/delay.py
 
       - name: Payload
+        if:  ${{ contains(steps.continueToRun.outcome, 'success') }}
         env: 
           MY_SECRET_USERNAME: ${{ secrets.MY_SECRET_USERNAME }}
           MY_SECRET_PASSWORD: ${{ secrets.MY_SECRET_PASSWORD }}
