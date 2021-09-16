@@ -3,5 +3,5 @@ from time import sleep
 from util import printTime
 
 printTime()
-sleep(randint(10, 3 * 60))
+sleep(randint(10, 5 * 60))
 printTime()

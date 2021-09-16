@@ -79,16 +79,13 @@ province = columnList[0].find_elements(By.CLASS_NAME,
                                        'van-picker-column__item')
 for i in range(int(location['province'])):
     province[i].click()
-    print(province[i].text)
 city = columnList[1].find_elements(By.CLASS_NAME, 'van-picker-column__item')
 for i in range(int(location['city'])):
     city[i].click()
-    print(city[i].text)
 district = columnList[2].find_elements(By.CLASS_NAME,
                                        'van-picker-column__item')
 for i in range(int(location['district'])):
     district[i].click()
-    print(district[i].text)
 
 confirmFeature = [(By.CLASS_NAME, 'van-picker__confirm'),
                   (By.XPATH, ".//button[contains(text(), '确认')]")]

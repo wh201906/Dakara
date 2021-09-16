@@ -18,8 +18,8 @@ jobs:
       - name: Install Selenium
         run: pip install selenium
       
-      # - name: Random Delay
-      #   run: python ./src/delay.py
+      - name: Random Delay
+        run: python ./src/delay.py
 
       - name: Payload
         env: 

@@ -12,16 +12,16 @@ jobs:
     steps:
       - name: Check Out
         uses: actions/checkout@v2
-        
+      
+      - name: Random
+        id: continueToRun
+        run: python ./src/rand.py
+        continue-on-error: true
+
       - name: Datetime
+        if:  ${{ contains(steps.continueToRun.outcome, 'success') }}
         run: date
       
       - name: Install Selenium
+        if:  ${{ contains(steps.continueToRun.outcome, 'success') }}
         run: pip install selenium
-
-      - name: Test
-        env: 
-          MY_SECRET_USERNAME: ${{ secrets.MY_SECRET_USERNAME }}
-          MY_SECRET_PASSWORD: ${{ secrets.MY_SECRET_PASSWORD }}
-          MY_SECRET_LOCATION: ${{ secrets.MY_SECRET_LOCATION }}
-        run: python ./src/test.py
