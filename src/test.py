@@ -37,6 +37,12 @@ for i in range(5):
         print("Error: Failed to login#" + str(i + 1))
         continue
     else:
+        for j in range(5):
+            if 'auth' in driver.current_url:
+                print('Waiting login....')
+                driver.implicitly_wait(pageWaitTime)
+            else:
+                break
         printTime()
         print("Info: Login successed!")
         break
@@ -118,7 +124,7 @@ printTime()
 print("Info: Confirming")
 tryClick(dakaFeature)
 sleep(sleepTime)
-tryClick(finalFeature)
+# tryClick(finalFeature)
 
 printTime()
 print("Info: Checking state")
