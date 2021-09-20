@@ -3,7 +3,7 @@ from os import environ
 from login import login
 from ast import literal_eval
 
-for i in range(5):
+for i in range(3):
     printTime()
     print('Info: Open url#' + str(i + 1))
     try:
@@ -117,17 +117,25 @@ tryClick(dakaFeature)
 sleep(sleepTime)
 tryClick(finalFeature)
 
-printTime()
-print("Info: Checking state")
-sleep(sleepTime)
-driver.refresh()
-sleep(sleepTime)
-driver.implicitly_wait(implicitWaitTime)
-sleep(sleepTime)
-if checkState() == False:
+for i in range(3):
     printTime()
-    print("Error: Failed to check in")
-    exit(1)
-else:
-    printTime()
-    print("Info: Successed!")
+    print("Info: Checking state#" + str(i + 1))
+    sleep(sleepTime)
+    try:
+        driver.refresh()
+    except TimeoutException:
+        sleep(sleepTime)
+        printTime()
+        print("Error: Failed to refresh")
+        continue
+    sleep(sleepTime)
+    driver.implicitly_wait(implicitWaitTime)
+    sleep(sleepTime)
+    if checkState() == False:
+        printTime()
+        print("Error: Failed to check in")
+        exit(1)
+    else:
+        printTime()
+        print("Info: Successed!")
+        exit(0)
