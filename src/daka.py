@@ -140,8 +140,9 @@ for i in range(3):
     if checkState() == False:
         printTime()
         print("Error: Failed to check in")
-        exit(1)
+        continue
     else:
         printTime()
         print("Info: Successed!")
         exit(0)
+exit(1)
