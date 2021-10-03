@@ -8,7 +8,7 @@ authFeature = [(By.CLASS_NAME, 'oau' + 'th_ch' + 'eck_log' + 'in'),
                 "//button[contains(text(), '授') and contains(text(), '权')]")]
 
 
-def login():
+def login(driver):
     try:
         printTime()
         print("Info: Start login")

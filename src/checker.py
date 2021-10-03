@@ -20,7 +20,7 @@ for i in range(5):
 
     sleep(sleepTime)
     driver.implicitly_wait(pageWaitTime)
-    if urlcore not in driver.current_url and login() is False:
+    if urlcore not in driver.current_url and login(driver) is False:
         printTime()
         print("Info: Unexpected url at " + driver.current_url)
         continue

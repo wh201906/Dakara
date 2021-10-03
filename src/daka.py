@@ -3,6 +3,7 @@ from os import environ
 from login import login
 from ast import literal_eval
 from localstorage import *
+from os import environ
 
 for i in range(3):
     printTime()
@@ -23,7 +24,7 @@ for i in range(3):
 
     sleep(sleepTime)
     driver.implicitly_wait(pageWaitTime)
-    if urlcore not in driver.current_url and login() is False:
+    if urlcore not in driver.current_url and login(driver) is False:
         printTime()
         print("Info: Unexpected url at " + driver.current_url)
         continue
@@ -61,20 +62,12 @@ else:
     printTime()
     print("Info: Start")
 
-storage = ls_dump()
-print(storage)
-ls_load(driver, storage)
-print('1', id(driver))
-driver.quit()
-driver = setAgent(yi__b_an)
-print('6', id(driver))
-print(url)
-
+ls_set(driver, "hd" + "uhe" + "lp_nc" + "ov_da" + "ilysi" + "gn_tok" + "en",
+       environ['MY_SECRET_TOKEN'])
 driver.get(url)
-ls_load(driver, storage)
-driver.refresh()
 sleep(sleepTime)
 driver.implicitly_wait(pageWaitTime)
+sleep(sleepTime)
 
 
 location = environ['MY_SECRET_LOCATION']
