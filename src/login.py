@@ -12,9 +12,9 @@ def login():
     try:
         printTime()
         print("Info: Start login")
-        tryClick(usernameFeature).send_keys(environ['MY_SECRET_USERNAME'])
-        tryClick(passwordFeature).send_keys(environ['MY_SECRET_PASSWORD'])
-        tryClick(authFeature)
+        tryClick(driver, usernameFeature).send_keys(environ['MY_SECRET_USERNAME'])
+        tryClick(driver, passwordFeature).send_keys(environ['MY_SECRET_PASSWORD'])
+        tryClick(driver, authFeature)
     except BaseException as e:
         my_print_exc(e)
         return False

@@ -2,6 +2,7 @@ from util import *
 from os import environ
 from login import login
 from ast import literal_eval
+from localstorage import *
 
 for i in range(5):
     printTime()
@@ -67,6 +68,8 @@ manualFeature = [(By.CLASS_NAME, 'van-tag--warning'),
                  (By.XPATH, "//*[contains(text(), '定位不准')]")]
 locationFeature = [(By.CLASS_NAME, 'van-field__control--right'),
                    (By.XPATH, "//*[contains(@placeholder, '手动选择')]")]
+
+print(ls_getKeys())
 
 sleep(10)
 printTime()

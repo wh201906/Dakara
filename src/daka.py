@@ -2,6 +2,7 @@ from util import *
 from os import environ
 from login import login
 from ast import literal_eval
+from localstorage import *
 
 for i in range(3):
     printTime()
@@ -60,6 +61,22 @@ else:
     printTime()
     print("Info: Start")
 
+storage = ls_dump()
+print(storage)
+ls_load(driver, storage)
+print('1', id(driver))
+driver.quit()
+driver = setAgent(yi__b_an)
+print('6', id(driver))
+print(url)
+
+driver.get(url)
+ls_load(driver, storage)
+driver.refresh()
+sleep(sleepTime)
+driver.implicitly_wait(pageWaitTime)
+
+
 location = environ['MY_SECRET_LOCATION']
 location = literal_eval(location)
 
@@ -71,13 +88,13 @@ locationFeature = [(By.CLASS_NAME, 'van-field__control--right'),
 sleep(10)
 printTime()
 print("Info: Manual location")
-tryClick(manualFeature)
-tryClick(locationFeature)
+tryClick(driver, manualFeature)
+tryClick(driver, locationFeature)
 
 popupFeature = [(By.CLASS_NAME, 'van-popup--bottom')]
 printTime()
 print("Info: Selecting location")
-popupElement = tryClick(popupFeature)
+popupElement = tryClick(driver, popupFeature)
 columnList = popupElement.find_elements(By.CLASS_NAME,
                                         'van-picker-column__wrapper')
 print("Column:", len(columnList))
@@ -95,7 +112,7 @@ for i in range(int(location['district'])):
 
 confirmFeature = [(By.CLASS_NAME, 'van-picker__confirm'),
                   (By.XPATH, ".//button[contains(text(), '确认')]")]
-tryClickFrom(popupElement, confirmFeature)
+tryClickFrom(driver, popupElement, confirmFeature)
 
 vaccineFeature = [(
     By.XPATH,
@@ -103,7 +120,7 @@ vaccineFeature = [(
 )]
 printTime()
 print("Info: Selecting vaccine")
-tryClick(vaccineFeature)
+tryClick(driver, vaccineFeature)
 
 dakaFeature = [
     (By.CLASS_NAME, 'van-button--info'),
@@ -119,9 +136,10 @@ finalFeature = [
 ]
 printTime()
 print("Info: Confirming")
-tryClick(dakaFeature)
+tryClick(driver, dakaFeature)
 sleep(sleepTime)
-tryClick(finalFeature)
+tryClick(driver, finalFeature)
+sleep(10)
 
 for i in range(3):
     printTime()

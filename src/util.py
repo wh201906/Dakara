@@ -14,6 +14,19 @@ pageWaitTime = 300
 implicitWaitTime = 60
 sleepTime = 30
 
+driver = None
+options = None
+
+# override the existing driver
+def setAgent(agent):
+    global driver, options
+    profile = webdriver.FirefoxProfile()
+    profile.set_preference("general.user" + "agent.override", agent)
+    profile.set_preference("geo.prompt.testing", True)
+    profile.set_preference("geo.prompt.testing.allow", False)
+
+    return webdriver.Firefox(firefox_profile=profile, options=options)
+
 try:
     if bool(environ['CI']) == True:
         print("Env: Github")
@@ -35,19 +48,14 @@ options = Options()
 options.headless = isRemote
 
 yi__b_an = 'Mozilla/5.0 yi' + 'b' + 'an_and' + 'roid/5.0.1'
+w_echa_t = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 Micro' + 'Mess' + 'enger/6.5.2.501 NetType/WIFI WindowsW' + 'echat Q' + 'BCore/3.43.884.400 QQB' + 'rowser/9.0.2524.400'
 urlcore = 'heal' + 'thch' + 'ecki' + 'n'
 url = 'https' + '://' + urlcore + '.hd' + 'u' + 'he' + 'lp.com'
 
-profile = webdriver.FirefoxProfile()
-profile.set_preference("general.user" + "agent.override", yi__b_an)
-profile.set_preference("geo.prompt.testing", True)
-profile.set_preference("geo.prompt.testing.allow", False)
-
-driver = webdriver.Firefox(firefox_profile=profile, options=options)
+driver = setAgent(yi__b_an)
 
 
-def tryClickFrom(start, lis):
-    global driver
+def tryClickFrom(driver, start, lis):
     targetList = []
     element = None
     for by, feature in lis:
@@ -80,9 +88,8 @@ def tryClickFrom(start, lis):
 
 # [(by, feature), (by, feature), ....]
 # xpath consisting of absolute nodes is not stable
-def tryClick(lis):
-    global driver
-    return tryClickFrom(driver, lis)
+def tryClick(driver, lis):
+    return tryClickFrom(driver, driver, lis)
 
 
 def printTime():
@@ -97,5 +104,7 @@ def my_print_exc(e):
     except TypeError:
         print(repr(e))
 
+
 def checkState():
     return ('今日已打卡' in driver.page_source)
+
