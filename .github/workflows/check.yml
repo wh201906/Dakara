@@ -2,7 +2,7 @@ name: Check
 
 on:
   schedule:
-    - cron: '23 03 * * *'
+    - cron: '23 23 * * *'
 
   workflow_dispatch:
 
