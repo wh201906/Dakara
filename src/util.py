@@ -106,5 +106,5 @@ def my_print_exc(e):
 
 
 def checkState():
-    return ('今日已打卡' in driver.page_source)
+    return ('已打卡' in driver.page_source)
 
