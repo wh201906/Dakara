@@ -1,8 +1,8 @@
 name: Dakara_final
 
 on:
-  # schedule:
-  #   - cron: '54 22 * * *'
+  schedule:
+    - cron: '54 22 * * *'
 
   workflow_dispatch:
 
