@@ -22,8 +22,12 @@ def setAgent(agent):
     global driver, options
     profile = webdriver.FirefoxProfile()
     profile.set_preference("general.user" + "agent.override", agent)
+    # in hdu
+    location = 'data:application/json,{"location": {"lat": 30.31503817940867, "lng":120.3432478048897}, "accuracy": 20.0}'
+    profile.set_preference("geo.wifi.uri", location)
+    profile.set_preference('geo.provider.network.url', location)
     profile.set_preference("geo.prompt.testing", True)
-    profile.set_preference("geo.prompt.testing.allow", False)
+    profile.set_preference("geo.prompt.testing.allow", True)
 
     return webdriver.Firefox(firefox_profile=profile, options=options)
 

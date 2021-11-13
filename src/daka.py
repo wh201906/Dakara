@@ -78,17 +78,22 @@ manualFeature = [(By.CLASS_NAME, 'van-tag--warning'),
 locationFeature = [(By.CLASS_NAME, 'van-field__control--right'),
                    (By.XPATH, "//*[contains(@placeholder, '手动选择')]")]
 hiddenLocationFeature = [(By.XPATH, "//*[contains(@label, '目前所在地址')]")]
+popupFeature = [(By.CLASS_NAME, 'van-button--default')]
 
 sleep(10)
+sleep(sleepTime)
 printTime()
 print("Info: Manual location")
 hiddenElement = driver.find_element(hiddenLocationFeature[0][0], hiddenLocationFeature[0][1])
 # print(hiddenElement)
+tryClick(driver, popupFeature)
 driver.execute_script("arguments[0].setAttribute('style', '')", hiddenElement)
+sleep(sleepTime)
 tryClick(driver, hiddenLocationFeature)
 # tryClick(driver, manualFeature)
 # tryClick(driver, locationFeature)
 
+sleep(sleepTime)
 popupFeature = [(By.CLASS_NAME, 'van-popup--bottom')]
 printTime()
 print("Info: Selecting location")
