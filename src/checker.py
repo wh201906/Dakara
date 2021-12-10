@@ -12,8 +12,12 @@ for i in range(5):
         if i == 4:
             printTime()
             print("Error: Failed to open url")
+            driver.quit()
             exit(1)
         else:
+            driver.quit()
+            driver = loadDriver()
+            sleep(7 * 60)
             driver.get('about:blank')
             driver.implicitly_wait(implicitWaitTime)
             continue

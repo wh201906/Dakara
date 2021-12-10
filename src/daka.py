@@ -16,8 +16,12 @@ for i in range(3):
         if i == 4:
             printTime()
             print("Error: Failed to open url")
+            driver.quit()
             exit(1)
         else:
+            driver.quit()
+            driver = loadDriver()
+            sleep(7 * 60)
             driver.get('about:blank')
             driver.implicitly_wait(implicitWaitTime)
             continue
@@ -68,7 +72,6 @@ driver.get(url)
 sleep(sleepTime)
 driver.implicitly_wait(pageWaitTime)
 sleep(sleepTime)
-
 
 location = environ['MY_SECRET_LOCATION']
 location = literal_eval(location)
