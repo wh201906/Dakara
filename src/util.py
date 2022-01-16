@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from time import sleep
 from os import environ
+from ast import literal_eval
 from datetime import datetime, timezone, timedelta
 from traceback import print_exc
 
@@ -22,15 +23,14 @@ sleepTime = 30
 
 driver = None
 
-
 # override the existing driver
 def setAgent(agent, options):
     profile = webdriver.FirefoxProfile()
     profile.set_preference("general.user" + "agent.override", agent)
     # in hdu
-    location = 'data:application/json,{"location": {"lat": 30.31503817940867, "lng":120.3432478048897}, "accuracy": 20.0}'
-    profile.set_preference("geo.wifi.uri", location)
-    profile.set_preference('geo.provider.network.url', location)
+    loc = 'data:application/json,{"location": {"lng": ' + str(location['lng']) + ', "lat": ' + str(location['lat']) + '}, "accuracy": 20.0}'
+    profile.set_preference("geo.wifi.uri", loc)
+    profile.set_preference('geo.provider.network.url', loc)
     profile.set_preference("geo.prompt.testing", True)
     profile.set_preference("geo.prompt.testing.allow", True)
 
@@ -117,5 +117,8 @@ if isRemote == False:
     pageWaitTime = 30
     implicitWaitTime = 30
     sleepTime = 5
+
+location = environ['MY_SECRET_LOCATION']
+location = literal_eval(location)
 
 driver = loadDriver()

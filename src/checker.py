@@ -49,8 +49,8 @@ if urlcore not in driver.current_url:
     exit(1)
 
 if checkState():
-    print("Info: Already check in")
+    print("Info: Already checked in")
     exit(0)
 else:
-    print("Error: Not check in")
+    print("Error: Not checked in")
     exit(1)

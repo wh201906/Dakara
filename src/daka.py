@@ -1,7 +1,6 @@
 from util import *
 from os import environ
 from login import login
-from ast import literal_eval
 from localstorage import *
 from os import environ
 
@@ -60,7 +59,7 @@ if urlcore not in driver.current_url:
 
 if checkState():
     printTime()
-    print("Error: Already check in")
+    print("Error: Already checked in")
     exit(0)
 else:
     printTime()
@@ -73,9 +72,6 @@ sleep(sleepTime)
 driver.implicitly_wait(pageWaitTime)
 sleep(sleepTime)
 
-location = environ['MY_SECRET_LOCATION']
-location = literal_eval(location)
-
 manualFeature = [(By.CLASS_NAME, 'van-tag--warning'),
                  (By.XPATH, "//*[contains(text(), '定位不准')]")]
 locationFeature = [(By.CLASS_NAME, 'van-field__control--right'),
@@ -85,40 +81,6 @@ popupFeature = [(By.CLASS_NAME, 'van-button--default')]
 
 sleep(10)
 sleep(sleepTime)
-printTime()
-print("Info: Manual location")
-hiddenElement = driver.find_element(hiddenLocationFeature[0][0], hiddenLocationFeature[0][1])
-# print(hiddenElement)
-tryClick(driver, popupFeature)
-driver.execute_script("arguments[0].setAttribute('style', '')", hiddenElement)
-sleep(sleepTime)
-tryClick(driver, hiddenLocationFeature)
-# tryClick(driver, manualFeature)
-# tryClick(driver, locationFeature)
-
-sleep(sleepTime)
-popupFeature = [(By.CLASS_NAME, 'van-popup--bottom')]
-printTime()
-print("Info: Selecting location")
-popupElement = tryClick(driver, popupFeature)
-columnList = popupElement.find_elements(By.CLASS_NAME,
-                                        'van-picker-column__wrapper')
-print("Column:", len(columnList))
-province = columnList[0].find_elements(By.CLASS_NAME,
-                                       'van-picker-column__item')
-for i in range(int(location['province'])):
-    province[i].click()
-city = columnList[1].find_elements(By.CLASS_NAME, 'van-picker-column__item')
-for i in range(int(location['city'])):
-    city[i].click()
-district = columnList[2].find_elements(By.CLASS_NAME,
-                                       'van-picker-column__item')
-for i in range(int(location['district'])):
-    district[i].click()
-
-confirmFeature = [(By.CLASS_NAME, 'van-picker__confirm'),
-                  (By.XPATH, ".//button[contains(text(), '确认')]")]
-tryClickFrom(driver, popupElement, confirmFeature)
 
 vaccineFeature = [(
     By.XPATH,
