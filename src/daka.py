@@ -2,7 +2,6 @@ from util import *
 from os import environ
 from login import login
 from localstorage import *
-from os import environ
 
 for i in range(3):
     printTime()
