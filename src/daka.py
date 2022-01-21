@@ -81,6 +81,21 @@ popupFeature = [(By.CLASS_NAME, 'van-button--default')]
 sleep(10)
 sleep(sleepTime)
 
+lng = float(location['lng'])
+lat = float(location['lat'])
+if 120.313 <= lng <= 120.405 and 30.305 <= lat <= 30.324:
+    targetStr = '正常在校'
+else:
+    targetStr = '正常在家'
+
+stateFeature = [(
+    By.XPATH,
+    "//span[contains(text(), '" + targetStr + "')]/../../div[contains(@class, 'van-radio')]"
+)]
+printTime()
+print("Info: Selecting state:", targetStr)
+tryClick(driver, stateFeature)
+
 vaccineFeature = [(
     By.XPATH,
     "//span[contains(text(), '共二针') and contains(text(), '已完成第二针')]/../../div[contains(@class, 'van-radio')]"
