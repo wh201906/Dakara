@@ -3,7 +3,7 @@ from os import environ
 from login import login
 from localstorage import *
 
-for i in range(3):
+for i in range(4):
     printTime()
     print('Info: Open url#' + str(i + 1))
     try:

@@ -2,7 +2,7 @@ name: Dakara_rand
 
 on:
   schedule:
-    - cron: '11 18,19,21,22 * * *'
+    - cron: '11,42 18,19,21,22 * * *'
 
   workflow_dispatch:
 
