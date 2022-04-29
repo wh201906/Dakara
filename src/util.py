@@ -16,12 +16,14 @@ urlcore = 'heal' + 'thch' + 'ecki' + 'n'
 url = 'https' + '://' + urlcore + '.hd' + 'u' + 'he' + 'lp.com'
 yi__b_an = 'Mozilla/5.0 yi' + 'b' + 'an_and' + 'roid/5.0.1'
 w_echa_t = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 Micro' + 'Mess' + 'enger/6.5.2.501 NetType/WIFI WindowsW' + 'echat Q' + 'BCore/3.43.884.400 QQB' + 'rowser/9.0.2524.400'
+di_n_gta_lk = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36 di' + 'ng' + 't' + 'alk-win/1.0.0 nw(0.14.7) Din' + 'gTa' + 'lk(6.5.10-Release.4259103) Mojo/1.0.0 Native AppType(release) Channel/201200'
 
 pageWaitTime = 300
 implicitWaitTime = 60
 sleepTime = 30
 
 driver = None
+
 
 # override the existing driver
 def setAgent(agent, options):

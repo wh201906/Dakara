@@ -66,10 +66,14 @@ else:
 
 ls_set(driver, "hd" + "uhe" + "lp_nc" + "ov_da" + "ilysi" + "gn_tok" + "en",
        environ['MY_SECRET_TOKEN'])
+
 driver.get(url)
 sleep(sleepTime)
 driver.implicitly_wait(pageWaitTime)
 sleep(sleepTime)
+
+ls_set(driver, "hd" + "uhe" + "lp_nc" + "ov_da" + "ilysi" + "gn_tok" + "en",
+       environ['MY_SECRET_TOKEN'])
 
 manualFeature = [(By.CLASS_NAME, 'van-tag--warning'),
                  (By.XPATH, "//*[contains(text(), '定位不准')]")]
