@@ -54,6 +54,8 @@ def check(sessionid: str, isRemote: bool):
 def getSessionId(username: str, password: str, isRemote: bool):
     options = Options()
     options.headless = isRemote
+    options.set_preference('network.trr.mode', 2)
+    options.set_preference('network.trr.uri', 'https://dns.google/dns-query')
     driver = webdriver.Firefox(options=options)
     wait = WebDriverWait(driver, 5, 0.5)
     try:
