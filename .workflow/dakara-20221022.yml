@@ -1,0 +1,47 @@
+version: '1.0'
+name: dakara-20221022
+displayName: dakara
+triggers:
+  trigger: manual
+  push:
+    branches:
+      prefix:
+        - ''
+  schedule:
+    - cron: '0 11,42 7,8 * * ? *'
+variables:
+  global:
+    - MY_SECRET_USERNAME
+    - MY_SECRET_PASSWORD
+stages:
+  - name: dakara-c1b3ba0c
+    displayName: dakara
+    strategy: naturally
+    trigger: auto
+    executor: []
+    steps:
+      - step: build@python
+        name: build_python
+        displayName: Step
+        pythonVersion: '3.7'
+        commands:
+          - pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+          - pip install httpx selenium
+          - yum -y install firefox
+          # - tar -xvzf geckodriver*
+          - cp ./assets/geckodriver ./
+          - chmod +x geckodriver
+          - export PATH=$PATH:$(pwd)
+          - export DAKA_RUNNER=Gitee
+          - export MY_SECRET_USERNAME=$MY_SECRET_USERNAME
+          - export MY_SECRET_PASSWORD=$MY_SECRET_PASSWORD
+          # - python ./src/delay.py
+          - python ./fork/daka.py
+        artifacts:
+          - name: BUILD_ARTIFACT
+            path:
+              - ./
+        caches: []
+        notify: []
+        strategy:
+          retry: '0'

@@ -9,8 +9,25 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+runner = ""
 
-def check(sessionid: str, isRemote: bool):
+
+def isLocal():
+    global runner
+    return runner == "Local"
+
+
+def getRunner():
+    global runner
+    try:
+        runner = str(environ['DAKA_RUNNER'])
+        if runner != "GitHub" and runner != "Gitee":
+            runner = "Local"
+    except KeyError:
+        runner = "Local"
+
+
+def check(sessionid: str):
     headers = {
         'Content-Type':
         'application/json',
@@ -38,7 +55,7 @@ def check(sessionid: str, isRemote: bool):
     for i in range(3):
         try:
             res = httpx.post(url, json=data, headers=headers, timeout=30)
-            if not isRemote:
+            if isLocal():
                 print(res.status_code, res.text)
             if res.status_code == 200:
                 return True
@@ -46,16 +63,18 @@ def check(sessionid: str, isRemote: bool):
                 print(f"#{i + 1} Failed")
         except Exception as e:
             print(f"#{i + 1} Failed")
-            if not isRemote:
+            if isLocal():
                 print(repr(e))
     return False
 
 
-def getSessionId(username: str, password: str, isRemote: bool):
+def getSessionId(username: str, password: str):
     options = Options()
-    options.headless = isRemote
-    options.set_preference('network.trr.mode', 2)
-    options.set_preference('network.trr.uri', 'https://dns.google/dns-query')
+    options.headless = not isLocal()
+    if runner == "GitHub":
+        options.set_preference('network.trr.mode', 2)
+        options.set_preference('network.trr.uri',
+                               'https://dns.google/dns-query')
     driver = webdriver.Firefox(options=options)
     wait = WebDriverWait(driver, 5, 0.5)
     try:
@@ -71,7 +90,8 @@ def getSessionId(username: str, password: str, isRemote: bool):
         driver.find_element(By.ID, "index_log" + "in_btn").click()
     except Exception as e:
         print("Cannot access ca" + "s.hdu.edu.cn")
-        print(repr(e))
+        if isLocal():
+            print(repr(e))
         return ""
 
     try:
@@ -93,29 +113,22 @@ def getSessionId(username: str, password: str, isRemote: bool):
         driver.quit()
 
 
-if __name__ == '__main__':
-    try:
-        if bool(environ['CI']) is True:
-            print("Env: Github")
-            isRemote = True
-        else:
-            print("Env: Local")
-            isRemote = False
-    except KeyError:
-        print("Env: Local")
-        isRemote = False
+if __name__ == "__main__":
 
-    if not isRemote:
+    getRunner()
+    print("Runner:", runner)
+
+    if isLocal():
         from secret import *
 
     sessionId = getSessionId(environ['MY_SECRET_USERNAME'],
-                             environ['MY_SECRET_PASSWORD'], isRemote)
+                             environ['MY_SECRET_PASSWORD'])
     if sessionId == "":
         sys.exit(1)
-    if not isRemote:
+    if isLocal():
         print("Session Id:", sessionId)
 
-    if not check(sessionId, isRemote):
+    if not check(sessionId):
         sys.exit(1)
     else:
         print("OK")
