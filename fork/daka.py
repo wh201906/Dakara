@@ -106,7 +106,7 @@ if __name__ == '__main__':
 
     if not isRemote:
         from secret import *
-    isRemote = True
+
     sessionId = getSessionId(environ['MY_SECRET_USERNAME'],
                              environ['MY_SECRET_PASSWORD'], isRemote)
     if sessionId == "":

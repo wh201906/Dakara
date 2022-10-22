@@ -1,7 +1,6 @@
 from random import randint
 from time import sleep
-from util import printTime
 
-printTime()
+print("Random delay starts")
 sleep(randint(10, 5 * 60))
-printTime()
+print("Random delay ends")
