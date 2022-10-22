@@ -69,8 +69,7 @@ def getSessionId(username: str, password: str, isRemote: bool):
         driver.find_element(By.ID, "index_log" + "in_btn").click()
     except Exception as e:
         print("Cannot access ca" + "s.hdu.edu.cn")
-        if not isRemote:
-            print(repr(e))
+        print(repr(e))
         return ""
 
     try:
