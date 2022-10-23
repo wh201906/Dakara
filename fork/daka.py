@@ -101,7 +101,7 @@ def getSessionId(username: str, password: str):
     except TimeoutException as e:
         driver.get("https://sk" + "l.h" + "duhe" + "lp.com/pas" +
                    "scard.html#/pas" + "scard")
-        for retryCnt in range(10):
+        for retryCnt in range(20):
             time.sleep(1)
             sessionId = driver.execute_script(
                 "return window.localStorage.getItem('sessionId')")

@@ -27,7 +27,10 @@ stages:
         commands:
           - pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
           - pip install httpx selenium
+          # Disable epel repo to reduce time consumption(~4-8min)
+          - sed -e 's|^enabled=1|enabled=0|g' -i.bak /etc/yum.repos.d/epel*.repo
           - yum -y install firefox
+          # - wget https://github.com/mozilla/geckodriver/releases/download/v0.32.0/geckodriver-v0.32.0-linux64.tar.gz
           # - tar -xvzf geckodriver*
           - cp ./assets/geckodriver ./
           - chmod +x geckodriver
