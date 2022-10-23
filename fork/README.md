@@ -21,4 +21,5 @@ create a new secret named `MY_SECRET_USERNAME`, then set the `Value` to the user
 1. Import this repository from Github link
 2. Go to `Pipelines` of this repo, enable it.
 3. In `Pipelines`, add `MY_SECRET_USERNAME` and `MY_SECRET_PASSWORD` in `Global Parameter`
-4. In `Pipelines`, click `New pipeline`, copy the content of config file in it, then click `Save` 
+4. In `Pipelines`, click `New pipeline`, copy the content of config file in it, then click `Save`  
+(You might need to deleted the existing config file first, even the content is exactly the same)

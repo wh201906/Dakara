@@ -69,6 +69,7 @@ def check(sessionid: str):
 
 
 def getSessionId(username: str, password: str):
+    print("Getting session ID")
     options = Options()
     options.headless = not isLocal()
     if runner == "GitHub":
@@ -76,13 +77,14 @@ def getSessionId(username: str, password: str):
         options.set_preference('network.trr.uri',
                                'https://dns.google/dns-query')
     driver = webdriver.Firefox(options=options)
-    wait = WebDriverWait(driver, 5, 0.5)
+    wait = WebDriverWait(driver, 10, 0.5)
     try:
         driver.get("https://ca" + "s.hd" + "u.edu.cn/c" + "as/login")
         wait.until(EC.presence_of_element_located((By.ID, "un")))
         wait.until(EC.presence_of_element_located((By.ID, "pd")))
         wait.until(
             EC.presence_of_element_located((By.ID, "index_log" + "in_btn")))
+        print("Login page loaded")
         driver.find_element(By.ID, "un").clear()
         driver.find_element(By.ID, "un").send_keys(username)
         driver.find_element(By.ID, "pd").clear()
@@ -94,23 +96,43 @@ def getSessionId(username: str, password: str):
             print(repr(e))
         return ""
 
+    time.sleep(2)
     try:
-        wait.until(EC.presence_of_element_located((By.ID, "errormsg")))
-        print("Failed to login")
-        return ""
-    except TimeoutException as e:
-        driver.get("https://sk" + "l.h" + "duhe" + "lp.com/pas" +
-                   "scard.html#/pas" + "scard")
-        for retryCnt in range(20):
-            time.sleep(1)
-            sessionId = driver.execute_script(
-                "return window.localStorage.getItem('sessionId')")
+        wait.until(
+            EC.presence_of_element_located(
+                (By.XPATH, "//span[@id='total_num' or @id='errormsg']")))
+        if len(driver.find_elements(By.ID, "errormsg")) > 0:
+            print("Failed to log in")
+            return ""
+        else:
+            sessionId = readSessionId(driver, wait)
             if sessionId is not None and sessionId != "":
                 return sessionId
-        print("Cannot get SessionId")
+            else:
+                print("Cannot get SessionId")
+                return ""
+    except Exception as e:
+        print("Cannot go to next stage")
+        if isLocal():
+            print(repr(e), driver.current_url)
         return ""
     finally:
         driver.quit()
+
+
+def readSessionId(driver, wait):
+    driver.get("https://sk" + "l.h" + "duhe" + "lp.com/pas" +
+               "scard.html#/pas" + "scard")
+    wait.until(EC.presence_of_element_located((By.CLASS_NAME, "nucleic-acid")))
+    print("Passcard page loaded")
+
+    for retryCnt in range(10):
+        time.sleep(1)
+        sessionId = driver.execute_script(
+            "return window.localStorage.getItem('sessionId')")
+        if sessionId is not None and sessionId != "":
+            return sessionId
+    return ""
 
 
 if __name__ == "__main__":
