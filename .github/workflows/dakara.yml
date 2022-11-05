@@ -25,8 +25,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install selenium httpx
       
-      # - name: Random Delay
-      #   run: python ./src/delay.py
+      - name: Random Delay
+        run: python ./src/delay.py
 
       - name: Payload
         env: 

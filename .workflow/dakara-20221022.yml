@@ -38,7 +38,7 @@ stages:
           - export DAKA_RUNNER=Gitee
           - export MY_SECRET_USERNAME=$MY_SECRET_USERNAME
           - export MY_SECRET_PASSWORD=$MY_SECRET_PASSWORD
-          # - python ./src/delay.py
+          - python ./src/delay.py
           - python ./fork/daka.py
         artifacts:
           - name: BUILD_ARTIFACT
