@@ -8,7 +8,7 @@ triggers:
       prefix:
         - ''
   schedule:
-    - cron: '0 11,42 7,8 * * ? *'
+    - cron: '0 47 7,8,12,16 * * ? *'
 variables:
   global:
     - MY_SECRET_USERNAME
