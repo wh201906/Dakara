@@ -59,6 +59,9 @@ def check(sessionid: str):
                 print(res.status_code, res.text)
             if res.status_code == 200:
                 return True
+            elif res.status_code == 400 and "已经打卡" in res.text:
+                print("Already checked in")
+                return True
             else:
                 print(f"#{i + 1} Failed")
         except Exception as e:
@@ -96,28 +99,36 @@ def getSessionId(username: str, password: str):
             print(repr(e))
         return ""
 
+    loginFailed = False
     time.sleep(2)
     try:
         wait.until(
             EC.presence_of_element_located(
                 (By.XPATH, "//span[@id='total_num' or @id='errormsg']")))
         if len(driver.find_elements(By.ID, "errormsg")) > 0:
-            print("Failed to log in")
-            return ""
+            loginFailed = True
         else:
-            sessionId = readSessionId(driver, wait)
-            if sessionId is not None and sessionId != "":
-                return sessionId
-            else:
-                print("Cannot get SessionId")
-                return ""
-    except Exception as e:
-        print("Cannot go to next stage")
+            loginFailed = False
+    except Exception as e: # timeout
+        print("Warning: Cannot detect login state by element")
         if isLocal():
             print(repr(e), driver.current_url)
-        return ""
-    finally:
+        # Try to get the session id anyway
+        loginFailed = False
+
+    if loginFailed:
         driver.quit()
+        print("Failed to log in")
+        return ""
+    else:
+        sessionId = readSessionId(driver, wait)
+        if sessionId is not None and sessionId != "":
+            result = sessionId
+        else:
+            print("Cannot get SessionId")
+            result = ""
+        driver.quit()
+        return result
 
 
 def readSessionId(driver, wait):
