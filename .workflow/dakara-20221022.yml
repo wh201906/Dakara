@@ -5,8 +5,8 @@ triggers:
   trigger: manual
   push:
     branches:
-      prefix:
-        - ''
+      precise:
+        - main
   schedule:
     - cron: '0 47 7,8,12,16 * * ? *'
 variables:
